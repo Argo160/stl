@@ -12,7 +12,7 @@ Iran() {
   read -p "IP or Domain of kharej :" domainip
   read -p "Number of Inbounds you have got :" inbounds
 
-cat <<EOL > client.yaml
+cat <<EOL > /etc/stunnel/stunnel.conf
 pid = /etc/stunnel/stunnel.pid
 client = yes
 output = /etc/stunnel/stunnel.log
@@ -22,17 +22,38 @@ for ((i=1; i<=inbounds; i++))
 do
     read -p "Enter The Inboud port number :" port
     read -p "Enter The SSL Tunnel port number :" sslport
-cat <<EOL > client.yaml    
-[VMess$i]
+cat <<EOL > /etc/stunnel/stunnel.conf    
+[Inbound$i]
 accept = $port
 connect = $domainip:$sslport
+
+EOL
 done
-  [VMess]
-  accept = 2090
-  connect = kharej.ddns.net:587
 
+cat <<EOL > /usr/lib/systemd/system/stunnel.service
+[Unit]
+Description=SSL tunnel for network daemons
+After=network.target
+After=syslog.target
 
-  
+[Install]
+WantedBy=multi-user.target
+Alias=stunnel.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/stunnel /etc/stunnel/stunnel.conf
+ExecStop=/usr/bin/pkill stunnel
+
+# Give up if ping don't get an answer
+TimeoutSec=600
+
+Restart=always
+PrivateTmp=false
+EOL
+    systemctl start stunnel.service
+    service stunnel4 start
+    systemctl enable stunnel.service
 }
 while true; do
 clear
