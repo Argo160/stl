@@ -57,7 +57,7 @@ optimize() {
         sudo swapon $SWAP_PATH                   ## Enable swap
         echo "$SWAP_PATH   none    swap    sw    0   0" >> /etc/fstab ## Add to fstab
         echo 
-        green_msg 'SWAP Created Successfully.'
+        #green_msg 'SWAP Created Successfully.'
         echo -e "\e[32mdSWAP Created Successfully.\n\e[0m"  # Green color for UP
         echo
         sleep 0.5
