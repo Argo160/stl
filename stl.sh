@@ -415,12 +415,82 @@ connect = 0.0.0.0:$port
 EOL
 done
 clear
-read -p "Your Kharej domain for ssl :" domain
-read -p "Your Email for SSL :" email
-certbot certonly --standalone -d $domain --staple-ocsp -m $email --agree-tos
-cd /etc/letsencrypt/live/$domain/
-cat privkey.pem fullchain.pem >> /etc/stunnel/stunnel.pem
-chmod 0400 /etc/stunnel/stunnel.pem
+echo "Time to get SSL for Kharej Domain"
+while true; do
+    echo "1- certbot"
+    echo "2- Using Cloudflare Origin"
+    read -p "Enter your selected choice number: " choice
+    if [ "$choice" -eq 1 ]; then
+        read -p "Your Kharej domain for ssl :" domain
+        read -p "Your Email for SSL :" email
+        certbot certonly --standalone -d $domain --staple-ocsp -m $email --agree-tos
+        cd /etc/letsencrypt/live/$domain/
+        cat privkey.pem fullchain.pem >> /etc/stunnel/stunnel.pem
+        chmod 0400 /etc/stunnel/stunnel.pem
+        break  # Exit the loop after a valid selection
+    elif [ "$choice" -eq 2 ]; then
+
+        # Define the file path where the certificate will be saved
+        CERT_FILE="/etc/stunnel/cert.pem"
+        Key-File="/etc/stunnel/key.pem"
+        # Prompt the user to input the certificate
+        echo "Please paste the public certificate below, then press Enter twice:"
+
+        # Read the certificate content into a variable
+        CERT_CONTENT=""
+        while IFS= read -r line; do
+            # Break the loop if the user presses Enter twice (empty line)
+            [ -z "$line" ] && break
+            CERT_CONTENT="${CERT_CONTENT}${line}\n"
+        done
+
+        # Save the certificate content to the file
+        echo -e "$CERT_CONTENT" | sudo tee "$CERT_FILE" > /dev/null
+
+        # Confirm the certificate was saved
+        if [ -f "$CERT_FILE" ]; then
+            echo "public Certificate saved to $CERT_FILE"
+        else
+            echo "Failed to save the public certificate."
+            exit 1
+        fi
+
+
+        # Prompt the user to input the Private certificate
+        echo "Please paste the private certificate below, then press Enter twice:"
+
+        # Read the certificate content into a variable
+        Key_CONTENT=""
+        while IFS= read -r Key-line; do
+            # Break the loop if the user presses Enter twice (empty line)
+            [ -z "$Key-line" ] && break
+            Key_CONTENT="${Key_CONTENT}${Key-line}\n"
+        done
+
+        # Save the certificate content to the file
+        echo -e "$Key_CONTENT" | sudo tee "$Key_FILE" > /dev/null
+
+        # Confirm the certificate was saved
+        if [ -f "$Key_FILE" ]; then
+            echo "Private Certificate saved to $CERT_FILE"
+        else
+            echo "Failed to save the Private certificate."
+            exit 1
+        fi
+        cd /etc/stunnel/
+        cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
+        chmod 0400 /etc/stunnel/stunnel.pem
+        break  # Exit the loop after a valid selection
+    else
+        echo "Invalid choice! Please select either 1 or 2."
+    fi
+done
+
+
+
+
+
+
 
 cat <<EOL > /usr/lib/systemd/system/stunnel.service
 [Unit]
