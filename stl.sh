@@ -34,7 +34,7 @@ optimize() {
             sleep 0.5
         fi
         echo
-        echo -e "\033[33mInstalling socat...\033[0m" #yellow Color
+        echo -e "\033[33mInstalling certbot...\033[0m" #yellow Color
         echo
         sleep 0.5
         apt install certbot -y   
@@ -494,12 +494,6 @@ while true; do
         echo "Invalid choice! Please select either 1 or 2."
     fi
 done
-
-
-
-
-
-
 
 cat <<EOL > /usr/lib/systemd/system/stunnel.service
 [Unit]
