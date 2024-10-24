@@ -4,6 +4,15 @@ if [[ $EUID -ne 0 ]]; then
     echo "Use sudo -i to change user to root"
     exit 1
 fi
+
+# Declare Paths & Settings.
+SYS_PATH="/etc/sysctl.conf"
+PROF_PATH="/etc/profile"
+SSH_PORT=""
+SSH_PATH="/etc/ssh/sshd_config"
+SWAP_PATH="/swapfile"
+SWAP_SIZE=2G
+
 optimize() {
     clear
         apt-get update && apt-get upgrade -y
