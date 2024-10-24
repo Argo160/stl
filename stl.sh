@@ -394,6 +394,7 @@ EOL
     echo -e "\e[32mIRAN DONE SUCCESSFULLY.\e[0m"
     echo
     sleep 1
+    systemctl daemon-reload
     systemctl start stunnel.service
     service stunnel4 start
     systemctl enable stunnel.service
@@ -522,6 +523,7 @@ EOL
     echo -e "\e[32mKHAREJ DONE SUCCESSFULLY.\e[0m"
     echo
     sleep 1
+    systemctl daemon-reload
     systemctl start stunnel.service
     service stunnel4 start
     systemctl enable stunnel.service        
