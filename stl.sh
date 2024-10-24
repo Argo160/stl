@@ -21,7 +21,7 @@ optimize() {
         echo
         sleep 0.5
         echo -e "\033[33mInstalling stunnel...\033[0m" #yellow Color
-        apt install stunnel4 openssl -y
+        apt install stunnel openssl -y
         if command -v stunnel4 > /dev/null; then
             echo
             echo -e "\e[32mstunnel Installed.\e[0m"  # Green color for UP
