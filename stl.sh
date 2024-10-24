@@ -335,9 +335,9 @@ reboot1() {
 }        
 
 Iran() {
-  clear
   optimize
-  read -p "IP or Domain of kharej :" domainip
+  clear
+  read -p "Domain of kharej :" domainip
   read -p "Number of Inbounds you have got :" inbounds
 
 cat <<EOL > /etc/stunnel/stunnel.conf
@@ -348,7 +348,8 @@ output = /etc/stunnel/stunnel.log
 EOL
 for ((i=1; i<=inbounds; i++))
 do
-    read -p "Enter The Inboud port number :" port
+    clear
+    read -p "Enter The Inboud>$i port number :" port
     read -p "Enter The SSL Tunnel port number :" sslport
 cat <<EOL >> /etc/stunnel/stunnel.conf    
 [Inbound$i]
@@ -379,6 +380,11 @@ TimeoutSec=600
 Restart=always
 PrivateTmp=false
 EOL
+    clear
+    echo
+    echo -e "\033[31mIran Done.\033[0m"  # Print in red
+    echo
+    sleep 1
     systemctl start stunnel.service
     service stunnel4 start
     systemctl enable stunnel.service
@@ -386,8 +392,8 @@ EOL
 }
 
 Kharej() {
-  clear
   optimize
+  clear
   read -p "Number of Inbounds you have got :" inbounds
 
 cat <<EOL > /etc/stunnel/stunnel.conf
@@ -398,7 +404,8 @@ output = /etc/stunnel/stunnel.log
 EOL
 for ((i=1; i<=inbounds; i++))
 do
-    read -p "Enter The Inboud port number :" port
+    clear
+    read -p "Enter The Inboud>$i port number :" port
     read -p "Enter The SSL Tunnel port number :" sslport
 cat <<EOL >> /etc/stunnel/stunnel.conf    
 [Inbound$i]
@@ -407,6 +414,7 @@ connect = 0.0.0.0:$port
 
 EOL
 done
+clear
 read -p "Your Kharej domain for ssl :" domain
 read -p "Your Email for SSL :" email
 certbot certonly --standalone -d $domain --staple-ocsp -m $email --agree-tos
@@ -435,7 +443,11 @@ TimeoutSec=600
 Restart=always
 PrivateTmp=false
 EOL
-
+    clear
+    echo
+    echo -e "\033[31mKharej Done.\033[0m"  # Print in red
+    echo
+    sleep 1
     systemctl start stunnel.service
     service stunnel4 start
     systemctl enable stunnel.service        
