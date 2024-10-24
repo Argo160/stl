@@ -342,7 +342,7 @@ reboot1() {
         fi
     done    
 }        
-
+######## IRAN
 Iran() {
   optimize
   clear
@@ -391,7 +391,7 @@ PrivateTmp=false
 EOL
     clear
     echo
-    echo -e "\033[31mIran Done.\033[0m"  # Print in red
+    echo -e "\e[32mIRAN DONE SUCCESSFULLY.\e[0m"
     echo
     sleep 1
     systemctl start stunnel.service
@@ -400,6 +400,7 @@ EOL
     reboot1
 }
 
+###### KHAREJ
 Kharej() {
   optimize
   clear
@@ -518,7 +519,7 @@ PrivateTmp=false
 EOL
     clear
     echo
-    echo -e "\033[31mKharej Done.\033[0m"  # Print in red
+    echo -e "\e[32mKHAREJ DONE SUCCESSFULLY.\e[0m"
     echo
     sleep 1
     systemctl start stunnel.service
