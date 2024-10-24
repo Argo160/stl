@@ -22,7 +22,7 @@ for ((i=1; i<=inbounds; i++))
 do
     read -p "Enter The Inboud port number :" port
     read -p "Enter The SSL Tunnel port number :" sslport
-cat <<EOL > /etc/stunnel/stunnel.conf    
+cat <<EOL >> /etc/stunnel/stunnel.conf    
 [Inbound$i]
 accept = $port
 connect = $domainip:$sslport
@@ -73,7 +73,7 @@ for ((i=1; i<=inbounds; i++))
 do
     read -p "Enter The Inboud port number :" port
     read -p "Enter The SSL Tunnel port number :" sslport
-cat <<EOL > /etc/stunnel/stunnel.conf    
+cat <<EOL >> /etc/stunnel/stunnel.conf    
 [Inbound$i]
 accept = $sslport
 connect = 0.0.0.0:$port
