@@ -396,7 +396,7 @@ EOL
     sleep 1
     systemctl daemon-reload
     systemctl start stunnel.service
-    service stunnel4 start
+    service stunnel start
     systemctl enable stunnel.service
     reboot1
 }
@@ -525,7 +525,7 @@ EOL
     sleep 1
     systemctl daemon-reload
     systemctl start stunnel.service
-    service stunnel4 start
+    service stunnel start
     systemctl enable stunnel.service        
     reboot1
 }
