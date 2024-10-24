@@ -6,6 +6,41 @@ if [[ $EUID -ne 0 ]]; then
 fi
 optimize() {
     clear
+        apt-get update && apt-get upgrade -y
+        echo
+        echo -e "\e[32mSystem Updated and Upgraded.\e[0m"  # Green color for UP
+        echo
+        sleep 0.5
+        echo -e "\033[33mInstalling stunnel...\033[0m" #yellow Color
+        apt install stunnel4 openssl -y
+        if command -v stunnel4 > /dev/null; then
+            echo
+            echo -e "\e[32mstunnel Installed.\e[0m"  # Green color for UP
+            echo
+            sleep 0.5
+        else
+            echo
+            echo -e "\033[31mstunnel is not installed.\033[0m"  # Print in red
+            echo
+            sleep 0.5
+        fi
+        echo
+        echo -e "\033[33mInstalling socat...\033[0m" #yellow Color
+        echo
+        sleep 0.5
+        apt install certbot -y   
+        if command -v certbot > /dev/null; then
+            echo
+            echo -e "\e[32mcertbot Installed.\e[0m"  # Green color for UP
+            echo
+            sleep 0.5
+        else
+            echo
+            echo -e "\033[31mcertbot is not installed.\033[0m"  # Print in red
+            echo
+            sleep 0.5
+        fi
+  
         ## Make Swap
         sudo fallocate -l $SWAP_SIZE $SWAP_PATH  ## Allocate size
         sudo chmod 600 $SWAP_PATH                ## Set proper permission
@@ -301,10 +336,7 @@ reboot1() {
 
 Iran() {
   clear
-  apt update && apt upgrade -y
   optimize
-  apt install stunnel4 openssl -y
-  apt install certbot -y
   read -p "IP or Domain of kharej :" domainip
   read -p "Number of Inbounds you have got :" inbounds
 
@@ -355,10 +387,7 @@ EOL
 
 Kharej() {
   clear
-  apt update && apt upgrade -y
   optimize
-  apt install stunnel4 openssl -y
-  apt install certbot -y
   read -p "Number of Inbounds you have got :" inbounds
 
 cat <<EOL > /etc/stunnel/stunnel.conf
