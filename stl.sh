@@ -443,7 +443,7 @@ while true; do
 
         # Define the file path where the certificate will be saved
         CERT_FILE="/etc/stunnel/cert.pem"
-        Key-File="/etc/stunnel/key.pem"
+        Key_FILE="/etc/stunnel/key.pem"
         # Prompt the user to input the certificate
         echo "Please paste the public certificate below, then press Enter twice:"
 
